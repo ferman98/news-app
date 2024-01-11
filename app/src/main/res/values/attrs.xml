@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <attr name="cvBorderWidth" format="dimension" />
+    <attr name="cvBorderColor" format="reference|color" />
+    <attr name="cvBackgroundColor" format="reference|color" />
+    <attr name="cvAlpha" format="integer" />
+
+    <declare-styleable name="RelativeLayoutCircle">
+        <attr name="android:radius" />
+        <attr name="cvBorderWidth" />
+        <attr name="cvBorderColor" />
+        <attr name="cvBackgroundColor" />
+        <attr name="cvAlpha" />
+    </declare-styleable>
+
+</resources>

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="x">4dp</dimen>
+    <dimen name="x2">8dp</dimen>
+    <dimen name="x3">12dp</dimen>
+    <dimen name="x4">16dp</dimen>
+    <dimen name="x5">20dp</dimen>
+    <dimen name="x6">24dp</dimen>
+    <dimen name="x7">28dp</dimen>
+    <dimen name="x8">32dp</dimen>
+    <dimen name="x9">36dp</dimen>
+    <dimen name="x10">40dp</dimen>
+    <dimen name="x11">44dp</dimen>
+    <dimen name="x12">48dp</dimen>
+
+    <dimen name="container">@dimen/x5</dimen>
+    <dimen name="button">@dimen/x12</dimen>
+</resources>
