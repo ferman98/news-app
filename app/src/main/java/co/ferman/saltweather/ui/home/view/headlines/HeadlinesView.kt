@@ -48,7 +48,7 @@ class HeadlinesView @JvmOverloads constructor(
         overScrollMode = OVER_SCROLL_NEVER
         addItemDecoration(ItemDecorationHorizontal(context))
         setLayout()
-        if(isInEditMode.not()) getHighlight()
+        if (isInEditMode.not()) getHighlight()
     }
 
     private fun setLayout() {
@@ -60,11 +60,11 @@ class HeadlinesView @JvmOverloads constructor(
             when (it) {
                 APIStatus.Loading -> {}
                 is APIStatus.Error -> {}
-                is APIStatus.Success<*> -> {
-                    (it.data as? NewsTopHeadlines)
-                        ?.articles
-                        ?.filter { a -> a.urlToImage != null }
-                        ?.also { articles -> adapter().update(articles) }
+                is APIStatus.Success<NewsTopHeadlines> -> {
+                    it.data
+                        .articles
+                        .filter { a -> a.urlToImage != null }
+                        .also { articles -> adapter().update(articles) }
                 }
             }
         }

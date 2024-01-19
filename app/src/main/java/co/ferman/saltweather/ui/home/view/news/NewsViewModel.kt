@@ -1,33 +1,28 @@
 package co.ferman.saltweather.ui.home.view.news
 
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.asLiveData
+import androidx.lifecycle.viewModelScope
 import co.ferman.saltweather.util.data.api.NetworkServices
 import co.ferman.saltweather.util.data.model.APIStatus
-import co.ferman.saltweather.util.data.di.NewsModule
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.flow.flowOn
+import co.ferman.saltweather.util.data.model.NewsTopHeadlines
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 class NewsViewModel @Inject constructor(private var services: NetworkServices) : ViewModel() {
+    private val newsLiveData: MutableLiveData<APIStatus<NewsTopHeadlines>> =
+        MutableLiveData(APIStatus.Loading)
 
-    @Inject
-    lateinit var newsRepo: NewsModule
-
-    fun getNews(): LiveData<APIStatus> {
-        return flow {
-            emit(APIStatus.Loading)
-
+    fun getNews(): LiveData<APIStatus<NewsTopHeadlines>> {
+        viewModelScope.launch {
             val response = services.getNews()
             if (response.isSuccessful) {
-                emit(APIStatus.Success(response.body()))
+                newsLiveData.value = APIStatus.Success(response.body() ?: NewsTopHeadlines())
             } else {
-                emit(APIStatus.Error(404))
+                newsLiveData.value = APIStatus.Error(404)
             }
         }
-            .flowOn(Dispatchers.IO)
-            .asLiveData()
+        return newsLiveData
     }
 }

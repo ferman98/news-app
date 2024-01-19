@@ -4,6 +4,7 @@ import android.content.Context
 import android.graphics.Rect
 import android.util.AttributeSet
 import android.view.View
+import android.widget.Toast
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.LifecycleRegistry
@@ -57,13 +58,16 @@ class NewsView @JvmOverloads constructor(
     private fun getNews() {
         vm.getNews().observe(this) {
             when (it) {
-                APIStatus.Loading -> {}
+                APIStatus.Loading -> {
+                    Toast.makeText(context, "Loading", Toast.LENGTH_LONG).show()
+                }
+
                 is APIStatus.Error -> {}
-                is APIStatus.Success<*> -> {
-                    (it.data as? NewsTopHeadlines)
-                        ?.articles
-                        ?.filter { a -> a.urlToImage != null }
-                        ?.also { articles -> adapter().update(articles) }
+                is APIStatus.Success<NewsTopHeadlines> -> {
+                    it.data
+                        .articles
+                        .filter { a -> a.urlToImage != null }
+                        .also { articles -> adapter().update(articles) }
                 }
             }
         }
